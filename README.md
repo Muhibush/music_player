@@ -29,6 +29,7 @@ samples, guidance on mobile development, and a full API reference.
     - Each song’s title, artist, album and album art should be displayed.
     - trackName!, artistName!, collectionName!, artworkUrl100, previewUrl
     - code coverage
+    - error handling server error, connection error
     - validate input term [Dewa 19 => dewa+19]
     - mocking using mocktail
     - 25 song each search...
