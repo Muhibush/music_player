@@ -6,27 +6,11 @@ import 'package:music_player/feature/music_player/presentation/widgets/empty_sta
 import 'package:music_player/feature/music_player/presentation/widgets/music_item.dart';
 import 'package:provider/provider.dart';
 
-class MusicPlayerPage extends StatefulWidget {
-  const MusicPlayerPage({Key? key}) : super(key: key);
+class MusicPlayerPage extends StatelessWidget {
+  final AudioPlayer audioPlayer;
 
-  @override
-  State<MusicPlayerPage> createState() => _MusicPlayerPageState();
-}
-
-class _MusicPlayerPageState extends State<MusicPlayerPage> {
-  late AudioPlayer _player;
-
-  @override
-  void initState() {
-    super.initState();
-    _player = AudioPlayer();
-  }
-
-  @override
-  void dispose() {
-    _player.dispose();
-    super.dispose();
-  }
+  const MusicPlayerPage({Key? key, required this.audioPlayer})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,13 +38,13 @@ class _MusicPlayerPageState extends State<MusicPlayerPage> {
                   music: music,
                   onTap: () async {
                     var url = music.previewUrl;
-                    var isPlaying = _player.playing;
+                    var isPlaying = audioPlayer.playing;
 
                     if (isPlaying) {
-                      _player.pause();
+                      audioPlayer.pause();
                     } else if (url != null) {
-                      await _player.setUrl(url);
-                      _player.play();
+                      await audioPlayer.setUrl(url);
+                      audioPlayer.play();
                     }
                   },
                 );
