@@ -11,6 +11,6 @@ class GetListMusicUseCase extends UseCase<String, List<Music>> {
 
   @override
   Future<Either<Failure, List<Music>>> call(term) async {
-    return repository.getMusic(term);
+    return await repository.getMusic(term);
   }
 }

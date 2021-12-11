@@ -24,9 +24,10 @@ samples, guidance on mobile development, and a full API reference.
     - only support android device with .....
     - min sdk
 ○ Supported features.
+    - test build release
     - Arrange Act Assert testing
     - bloc logging
-    - handle debounce
+    - handle debounce https://bloclibrary.dev/#/coreconcepts?id=advanced-event-transformations
     - lock orientation
     - music player plugin https://pub.dev/packages/just_audio
     - https://itunes.apple.com/search?term=dewa+19&entity=song&limit=25&attribute=artistTerm

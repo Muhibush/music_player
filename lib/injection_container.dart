@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:music_player/core/network/network_info.dart';
+import 'package:music_player/core/utils/input_converter.dart';
 import 'package:music_player/feature/music_player/injection_container.dart'
     as music_player_di;
 
@@ -12,6 +13,7 @@ Future<void> init() async {
   await music_player_di.init();
 
   /// Core
+  sl.registerLazySingleton<InputConverter>(() => InputConverter());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
   /// External
