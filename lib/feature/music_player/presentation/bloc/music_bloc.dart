@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:equatable/equatable.dart';
 import 'package:music_player/core/error/failure.dart';
 import 'package:music_player/core/utils/input_converter.dart';
@@ -13,7 +14,7 @@ const String initialMessage = 'Search your favorite artist';
 const String serverFailureMessage = 'Server Failure';
 const String connectionFailureMessage = 'No Connection';
 
-String emptyMusicMessage(String str) => 'Couldn\'t find"$str"';
+String emptyMusicMessage(String str) => 'Couldn\'t find "$str"';
 
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
   final InputConverter inputConverter;
@@ -23,7 +24,10 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
     required this.inputConverter,
     required this.getListMusicUseCase,
   }) : super(const MusicEmpty([], initialMessage)) {
-    on<MusicSearched>(_onSearched);
+    on<MusicSearched>(
+      _onSearched,
+      transformer: droppable(),
+    );
   }
 
   /// TODO handle debounce

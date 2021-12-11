@@ -7,6 +7,11 @@ abstract class MusicState extends Equatable {
 
   @override
   List<Object?> get props => [listMusic];
+
+  @override
+  String toString() {
+    return runtimeType.toString();
+  }
 }
 
 class MusicLoadInProgress extends MusicState {
