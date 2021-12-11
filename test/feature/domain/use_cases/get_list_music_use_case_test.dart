@@ -3,12 +3,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:music_player/feature/music_player/domain/entities/music.dart';
 import 'package:music_player/feature/music_player/domain/repositories/music_repositories.dart';
-import 'package:music_player/feature/music_player/domain/use_cases/get_music_use_case.dart';
+import 'package:music_player/feature/music_player/domain/use_cases/get_list_music_use_case.dart';
 
 class MockMusicRepository extends Mock implements MusicRepository {}
 
 void main() {
-  late GetMusicUseCase useCase;
+  late GetListMusicUseCase useCase;
   late MockMusicRepository repository;
   const tTerm = 'dewa+19';
   var tListMusic = [
@@ -24,14 +24,14 @@ void main() {
 
   setUpAll(() {
     repository = MockMusicRepository();
-    useCase = GetMusicUseCase(repository);
+    useCase = GetListMusicUseCase(repository);
   });
 
   test('get music', () async {
     when(() => repository.getMusic(any()))
         .thenAnswer((_) async => Right(tListMusic));
 
-    final result = await useCase(const Params(term: tTerm));
+    final result = await useCase(tTerm);
 
     expect(result, Right(tListMusic));
     verify(() => repository.getMusic(tTerm)).called(1);
