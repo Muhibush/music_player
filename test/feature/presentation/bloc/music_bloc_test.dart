@@ -38,7 +38,13 @@ void main() {
   });
 
   test('initialState should be Empty', () {
-    expect(musicBloc.state, const MusicEmpty([], initialMessage));
+    expect(
+        musicBloc.state,
+        const MusicEmpty(
+          [],
+          initialMessage,
+          initialSubMessage,
+        ));
   });
 
   group('MusicSearched', () {
@@ -90,7 +96,13 @@ void main() {
         setUpMockInputConverterFailure();
       },
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
-      expect: () => [const MusicEmpty([], initialMessage)],
+      expect: () => [
+        const MusicEmpty(
+          [],
+          initialMessage,
+          initialSubMessage,
+        )
+      ],
     );
 
     blocTest<MusicBloc, MusicState>('should get data from the use case',
@@ -131,7 +143,11 @@ void main() {
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => <MusicState>[
         const MusicLoadInProgress([]),
-        const MusicEmpty([], serverFailureMessage),
+        const MusicEmpty(
+          [],
+          serverFailureMessage,
+          serverFailureSubMessage,
+        ),
       ],
     );
 
@@ -146,7 +162,11 @@ void main() {
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => <MusicState>[
         const MusicLoadInProgress([]),
-        const MusicEmpty([], connectionFailureMessage),
+        const MusicEmpty(
+          [],
+          connectionFailureMessage,
+          connectionFailureSubMessage,
+        ),
       ],
     );
   });

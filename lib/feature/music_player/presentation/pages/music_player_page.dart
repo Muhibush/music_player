@@ -25,12 +25,16 @@ class MusicPlayerPage extends StatelessWidget {
       body: BlocBuilder<MusicBloc, MusicState>(
         builder: (context, state) {
           if (state is MusicEmpty) {
-            return EmptyState(message: state.message);
+            return EmptyState(
+              message: state.message,
+              subMessage: state.subMessage,
+            );
           }
 
           var listMusic = state.listMusic;
           return ListView.builder(
               itemCount: listMusic.length,
+              physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) {
                 var music = listMusic[index];

@@ -24,11 +24,13 @@ class MusicLoadSuccess extends MusicState {
 
 class MusicEmpty extends MusicState {
   final String message;
+  final String subMessage;
 
-  const MusicEmpty(List<Music> listMusic, this.message) : super(listMusic);
+  const MusicEmpty(List<Music> listMusic, this.message, this.subMessage)
+      : super(listMusic);
 
   @override
-  List<Object?> get props => [listMusic, message];
+  List<Object?> get props => [listMusic, message, subMessage];
 }
 
 class MusicPlayed extends MusicState {
