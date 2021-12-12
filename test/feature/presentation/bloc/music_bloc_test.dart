@@ -140,7 +140,7 @@ void main() {
     );
 
     blocTest<MusicBloc, MusicState>(
-      'should emit [Loading, Empty(serverFailureMessage)] when getting data fails',
+      'should emits [Loading, Empty(serverFailureMessage)] when getting data fails',
       build: () => musicBloc,
       setUp: () async {
         setUpMockInputConverterSuccess();
@@ -160,7 +160,7 @@ void main() {
     );
 
     blocTest<MusicBloc, MusicState>(
-      'should emit [Loading, Empty(connectionFailureMessage)] when connection fails',
+      'should emits [Loading, Empty(connectionFailureMessage)] when connection fails',
       build: () => musicBloc,
       setUp: () async {
         setUpMockInputConverterSuccess();
@@ -179,6 +179,100 @@ void main() {
           subMessage: connectionFailureSubMessage,
           isPlaying: false,
         ),
+      ],
+    );
+
+    blocTest<MusicBloc, MusicState>(
+      'should emits [Loading, Empty(emptyMusicMessage)] when no result',
+      build: () => musicBloc,
+      setUp: () async {
+        setUpMockInputConverterSuccess();
+        when(() => getListMusicUseCase(any()))
+            .thenAnswer((_) async => const Right([]));
+      },
+      act: (bloc) => bloc.add(const MusicSearched(tStr)),
+      expect: () => <MusicState>[
+        const MusicLoadInProgress(
+          listMusic: [],
+          isPlaying: false,
+        ),
+        MusicEmpty(
+          listMusic: const [],
+          message: emptyMusicMessage(tStr),
+          subMessage: emptyMusicSubMessage,
+          isPlaying: false,
+        ),
+      ],
+    );
+  });
+
+  group('MusicPlayPressed', () {
+    const tMusic1 = MusicModel(
+      trackName: "Cinta 'Kan Membawamu Kembali",
+      artistName: "Dewa 19",
+      collectionName: "The Best of Dewa 19",
+      artworkUrl100:
+          "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/e7/58/8a/e7588af6-970c-75a8-d030-6ea46778adb6/source/100x100bb.jpg",
+      previewUrl:
+          "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/67/80/56/67805626-221d-8aec-07dd-a3b94e60e65e/mzaf_2602186213288694935.plus.aac.p.m4a",
+    );
+    const tMusic2 = MusicModel(
+      trackName: "Kamulah Satu Satunya",
+      artistName: "Dewa 19",
+      collectionName: "The Best of Dewa 19",
+    );
+    const tListMusic = [tMusic1, tMusic2];
+
+    blocTest<MusicBloc, MusicState>(
+      'should emit [MusicPlayed(isplaying: true,playedMusic:!null)] when MusicPlayPressed',
+      build: () => musicBloc,
+      seed: () => const MusicLoadSuccess(
+        listMusic: tListMusic,
+        isPlaying: false,
+      ),
+      act: (bloc) => bloc.add(const MusicPlayPressed(tMusic1)),
+      expect: () => <MusicState>[
+        const MusicPlayed(
+          listMusic: tListMusic,
+          isPlaying: true,
+          playedMusic: tMusic1,
+        )
+      ],
+    );
+  });
+
+  group('MusicPausePressed', () {
+    const tMusic1 = MusicModel(
+      trackName: "Cinta 'Kan Membawamu Kembali",
+      artistName: "Dewa 19",
+      collectionName: "The Best of Dewa 19",
+      artworkUrl100:
+          "https://is5-ssl.mzstatic.com/image/thumb/Music125/v4/e7/58/8a/e7588af6-970c-75a8-d030-6ea46778adb6/source/100x100bb.jpg",
+      previewUrl:
+          "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/67/80/56/67805626-221d-8aec-07dd-a3b94e60e65e/mzaf_2602186213288694935.plus.aac.p.m4a",
+    );
+    const tMusic2 = MusicModel(
+      trackName: "Kamulah Satu Satunya",
+      artistName: "Dewa 19",
+      collectionName: "The Best of Dewa 19",
+    );
+    const tListMusic = [tMusic1, tMusic2];
+
+    blocTest<MusicBloc, MusicState>(
+      'should emit [MusicPause(isplaying: false,playedMusic:!null)] when MusicPausePressed',
+      build: () => musicBloc,
+      seed: () => const MusicPlayed(
+        listMusic: tListMusic,
+        isPlaying: true,
+        playedMusic: tMusic1,
+      ),
+      act: (bloc) => bloc.add(MusicPausePressed()),
+      expect: () => <MusicState>[
+        const MusicPaused(
+          listMusic: tListMusic,
+          isPlaying: false,
+          playedMusic: tMusic1,
+        )
       ],
     );
   });

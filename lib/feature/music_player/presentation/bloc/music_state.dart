@@ -9,7 +9,7 @@ abstract class MusicState extends Equatable {
       {required this.listMusic, this.playedMusic, required this.isPlaying});
 
   @override
-  List<Object?> get props => [listMusic, playedMusic];
+  List<Object?> get props => [listMusic, playedMusic, isPlaying];
 
   @override
   String toString() {
