@@ -21,15 +21,12 @@ void main() {
 
   group('isConnected', () {
     test(
-        'should forward the call to InternetConnectionChecker.hasConnection true',
-        () async {
+        'should forward the call to '
+        'InternetConnectionChecker.hasConnection true', () async {
       const tHasConnectionFuture = true;
-
       when(() => mockInternetConnectionChecker.hasConnection)
           .thenAnswer((_) async => tHasConnectionFuture);
-
       final result = await networkInfo.isConnected;
-
       verify(() => mockInternetConnectionChecker.hasConnection).called(1);
       expect(result, tHasConnectionFuture);
     });
@@ -37,15 +34,12 @@ void main() {
 
   group('isNotConnected', () {
     test(
-        'should forward the call to InternetConnectionChecker.hasConnection false',
-        () async {
+        'should forward the call to '
+        'InternetConnectionChecker.hasConnection false', () async {
       const tHasConnectionFuture = false;
-
       when(() => mockInternetConnectionChecker.hasConnection)
           .thenAnswer((_) async => tHasConnectionFuture);
-
       final result = await networkInfo.isConnected;
-
       verify(() => mockInternetConnectionChecker.hasConnection).called(1);
       expect(result, tHasConnectionFuture);
     });

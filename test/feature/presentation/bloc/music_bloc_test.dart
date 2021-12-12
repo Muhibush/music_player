@@ -49,11 +49,8 @@ void main() {
   });
 
   group('MusicSearched', () {
-    // The event takes in a String
     const tStr = 'dewa 19';
-    // This is the successful output of the InputConverter
     const tTerm = 'dewa+19';
-    // NumberTrivia instance is needed too, of course
     const tMusic1 = MusicModel(
       trackName: "Cinta 'Kan Membawamu Kembali",
       artistName: "Dewa 19",

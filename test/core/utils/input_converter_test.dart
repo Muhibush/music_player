@@ -18,15 +18,13 @@ void main() {
         expect(result, const Right(tTerm));
       }
     });
-  });
-  test(
-    'should return a failure when term is empty',
-    () async {
+
+    test('should return a failure when term is empty', () async {
       const tListString = ['', ' ', '   '];
       for (var element in tListString) {
         final result = inputConverter.stringToTerm(element);
         expect(result, Left(InvalidInputFailure()));
       }
-    },
-  );
+    });
+  });
 }

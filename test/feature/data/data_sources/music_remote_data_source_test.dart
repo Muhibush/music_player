@@ -42,29 +42,30 @@ void main() {
     const tTerm = 'dewa+19';
     final tMusicRootModel =
         MusicRootModel.fromJson(json.decode(fixture('music_root.json')));
-    test(
-        'should preform a GET request on a URL with number being the endpoint and with application/json header',
-        () {
-      setUpMockHttpClientSuccess200();
 
+    test(
+        'should preform a GET request on a URL with number being the endpoint '
+        'and with application/json header', () {
+      setUpMockHttpClientSuccess200();
       dataSource.getMusic(tTerm);
       verify(() => mockHttpClient.get(
           Uri.parse(
-              'https://itunes.apple.com/search?term=$tTerm&entity=song&limit=25&attribute=artistTerm'),
+              'https://itunes.apple.com/search?term=$tTerm&entity=song&limit='
+              '25&attribute=artistTerm'),
           headers: {'Content-Type': 'application/json'}));
     });
+
     test('should return list Music when the response code is 200 (success)',
         () async {
       setUpMockHttpClientSuccess200();
-
       final result = await dataSource.getMusic(tTerm);
       expect(result, tMusicRootModel.results);
     });
+
     test(
         'should throw a ServerException when the response code is 404 or other',
         () async {
       setUpMockHttpClientFailure404();
-
       final callResult = dataSource.getMusic;
       expect(callResult(tTerm), throwsA(const TypeMatcher<ServerException>()));
     });
