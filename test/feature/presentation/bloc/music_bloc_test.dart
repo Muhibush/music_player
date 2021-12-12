@@ -44,6 +44,7 @@ void main() {
           listMusic: [],
           message: initialMessage,
           subMessage: initialSubMessage,
+          isPlaying: false,
         ));
   });
 
@@ -98,10 +99,10 @@ void main() {
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => [
         const MusicEmpty(
-          listMusic: [],
-          message: initialMessage,
-          subMessage: initialSubMessage,
-        )
+            listMusic: [],
+            message: initialMessage,
+            subMessage: initialSubMessage,
+            isPlaying: false)
       ],
     );
 
@@ -127,8 +128,14 @@ void main() {
       },
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => <MusicState>[
-        const MusicLoadInProgress(listMusic: []),
-        const MusicLoadSuccess(listMusic: tListMusic)
+        const MusicLoadInProgress(
+          listMusic: [],
+          isPlaying: false,
+        ),
+        const MusicLoadSuccess(
+          listMusic: tListMusic,
+          isPlaying: false,
+        )
       ],
     );
 
@@ -142,11 +149,12 @@ void main() {
       },
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => <MusicState>[
-        const MusicLoadInProgress(listMusic: []),
+        const MusicLoadInProgress(listMusic: [], isPlaying: false),
         const MusicEmpty(
           listMusic: [],
           message: serverFailureMessage,
           subMessage: serverFailureSubMessage,
+          isPlaying: false,
         ),
       ],
     );
@@ -161,11 +169,15 @@ void main() {
       },
       act: (bloc) => bloc.add(const MusicSearched(tStr)),
       expect: () => <MusicState>[
-        const MusicLoadInProgress(listMusic: []),
+        const MusicLoadInProgress(
+          listMusic: [],
+          isPlaying: false,
+        ),
         const MusicEmpty(
           listMusic: [],
           message: connectionFailureMessage,
           subMessage: connectionFailureSubMessage,
+          isPlaying: false,
         ),
       ],
     );

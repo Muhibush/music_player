@@ -80,13 +80,13 @@ class MusicPlayerPage extends StatelessWidget {
                 return Positioned(
                     bottom: 0,
                     child: MusicControls(
-                      onTapIcon: (isPause) {
-                        if (isPause) {
+                      onTapIcon: (isPlaying) {
+                        if (isPlaying) {
+                          context.read<MusicBloc>().add(MusicPausePressed());
+                        } else {
                           context
                               .read<MusicBloc>()
                               .add(MusicPlayPressed(playedMusic));
-                        } else {
-                          context.read<MusicBloc>().add(MusicPausePressed());
                         }
                       },
                       music: playedMusic,

@@ -85,16 +85,16 @@ class MusicControls extends StatelessWidget {
             ),
             BlocBuilder<MusicBloc, MusicState>(
               builder: (context, state) {
-                var isPause = state is MusicPaused;
+                var isPlaying = state.isPlaying;
                 return GestureDetector(
                   onTap: () {
-                    onTapIcon(isPause);
+                    onTapIcon(isPlaying);
                   },
                   child: Container(
                     color: Colors.transparent,
                     width: 32.w,
                     child: Icon(
-                      isPause ? Icons.play_arrow : Icons.pause,
+                      isPlaying ? Icons.pause : Icons.play_arrow,
                       color: Colors.green,
                       size: 24.w,
                     ),
