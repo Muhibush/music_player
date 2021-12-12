@@ -33,17 +33,17 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
             subMessage: initialSubMessage)) {
     on<MusicSearched>(
       _onSearched,
-      transformer: droppable(),
+      transformer: restartable(),
     );
 
     on<MusicPlayPressed>(
       _onPlayPressed,
-      transformer: droppable(),
+      transformer: restartable(),
     );
 
     on<MusicPausePressed>(
       _onPausePressed,
-      transformer: droppable(),
+      transformer: restartable(),
     );
   }
 
