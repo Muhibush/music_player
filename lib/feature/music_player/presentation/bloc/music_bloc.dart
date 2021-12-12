@@ -10,15 +10,16 @@ part 'music_event.dart';
 
 part 'music_state.dart';
 
-const String initialMessage = 'Search your favorite artist';
-const String initialSubMessage =
-    'Try searching again using a different spelling or keyword.';
+const String initialMessage = 'Play what you love';
+const String initialSubMessage = 'Search for an artist and enjoy their songs.';
 const String serverFailureMessage = 'Server Failure';
 const String serverFailureSubMessage = 'Sorry we\'ll be back soon.';
 const String connectionFailureMessage = 'No Connection';
 const String connectionFailureSubMessage = 'Go online to search again.';
 
 String emptyMusicMessage(String str) => 'Couldn\'t find "$str"';
+const String emptyMusicSubMessage =
+    'Try searching again using a different spelling or keyword.';
 
 class MusicBloc extends Bloc<MusicEvent, MusicState> {
   final InputConverter inputConverter;
@@ -83,7 +84,7 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
                 listMusic: listMusic,
                 playedMusic: state.playedMusic,
                 message: emptyMusicMessage(event.str),
-                subMessage: initialSubMessage,
+                subMessage: emptyMusicSubMessage,
                 isPlaying: state.isPlaying,
               ));
             } else {
