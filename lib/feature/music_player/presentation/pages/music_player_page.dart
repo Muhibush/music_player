@@ -17,6 +17,11 @@ class MusicPlayerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: TextField(
+          style: const TextStyle(color: Colors.white),
+          decoration: const InputDecoration(
+            hintText: 'Search artist',
+            border: InputBorder.none,
+          ),
           onChanged: (str) {
             context.read<MusicBloc>().add(MusicSearched(str));
           },
