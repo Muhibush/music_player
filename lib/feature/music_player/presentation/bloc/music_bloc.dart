@@ -51,21 +51,25 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
     final inputEither = inputConverter.stringToTerm(event.str);
 
     await inputEither.fold(
-      /// not doing anything if input only contains whitespace
-      (failure) async => emit(state),
+      (failure) async {
+        /// not doing anything if input only contains whitespace
+        emit(state);
+      },
       (term) async {
         /// loading state
         emit(MusicLoadInProgress(
             listMusic: state.listMusic, playedMusic: state.playedMusic));
         final failureOrMusic = await getListMusicUseCase(term);
         failureOrMusic.fold(
-          /// error state
-          (failure) => emit(MusicEmpty(
-            listMusic: state.listMusic,
-            playedMusic: state.playedMusic,
-            message: _mapFailureToMessage(failure),
-            subMessage: _mapFailureToSubMessage(failure),
-          )),
+          (failure) {
+            /// error state
+            emit(MusicEmpty(
+              listMusic: state.listMusic,
+              playedMusic: state.playedMusic,
+              message: _mapFailureToMessage(failure),
+              subMessage: _mapFailureToSubMessage(failure),
+            ));
+          },
           (listMusic) {
             if (listMusic.isEmpty) {
               /// empty state

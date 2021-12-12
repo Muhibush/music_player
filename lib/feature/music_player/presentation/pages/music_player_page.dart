@@ -31,6 +31,7 @@ class MusicPlayerPage extends StatelessWidget {
         ),
       ),
       body: Stack(
+        fit: StackFit.expand,
         children: [
           BlocConsumer<MusicBloc, MusicState>(
             listener: (context, state) async {
@@ -54,8 +55,6 @@ class MusicPlayerPage extends StatelessWidget {
 
               var listMusic = state.listMusic;
               var playedMusic = state.playedMusic;
-
-              if (listMusic.isEmpty) return const SizedBox.shrink();
 
               return ListView.builder(
                   itemCount: listMusic.length,
@@ -93,9 +92,6 @@ class MusicPlayerPage extends StatelessWidget {
                       music: playedMusic,
                     ));
               }
-
-              print('uki-----------');
-              print(state.runtimeType);
               return const SizedBox.shrink();
             },
           )

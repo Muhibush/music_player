@@ -11,11 +11,12 @@ abstract class MusicState extends Equatable {
 
   @override
   String toString() {
-    return runtimeType.toString() +
+    return "\n----------\n" +
+        runtimeType.toString() +
         "\ntrackName: " +
         (playedMusic?.trackName ?? 'empty') +
         "\nlistMusicLength: " +
-        (listMusic.length.toString());
+        (listMusic.length.toString() + "\n");
   }
 }
 
