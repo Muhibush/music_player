@@ -26,5 +26,3 @@ class MusicPlayPressed extends MusicEvent {
 }
 
 class MusicPausePressed extends MusicEvent {}
-
-class MusicResumePressed extends MusicEvent {}

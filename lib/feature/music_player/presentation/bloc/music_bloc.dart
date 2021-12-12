@@ -58,15 +58,15 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
         emit(MusicLoadInProgress(
             listMusic: state.listMusic, playedMusic: state.playedMusic));
         final failureOrMusic = await getListMusicUseCase(term);
-        await failureOrMusic.fold(
+        failureOrMusic.fold(
           /// error state
-          (failure) async => emit(MusicEmpty(
+          (failure) => emit(MusicEmpty(
             listMusic: state.listMusic,
             playedMusic: state.playedMusic,
             message: _mapFailureToMessage(failure),
             subMessage: _mapFailureToSubMessage(failure),
           )),
-          (listMusic) async {
+          (listMusic) {
             if (listMusic.isEmpty) {
               /// empty state
               emit(MusicEmpty(

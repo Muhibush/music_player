@@ -54,6 +54,9 @@ class MusicPlayerPage extends StatelessWidget {
 
               var listMusic = state.listMusic;
               var playedMusic = state.playedMusic;
+
+              if (listMusic.isEmpty) return const SizedBox.shrink();
+
               return ListView.builder(
                   itemCount: listMusic.length,
                   physics: const BouncingScrollPhysics(),
