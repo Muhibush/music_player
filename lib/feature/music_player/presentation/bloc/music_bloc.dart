@@ -27,14 +27,26 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
   MusicBloc({
     required this.inputConverter,
     required this.getListMusicUseCase,
-  }) : super(const MusicEmpty([], initialMessage, initialSubMessage)) {
+  }) : super(const MusicEmpty(
+            listMusic: [],
+            message: initialMessage,
+            subMessage: initialSubMessage)) {
     on<MusicSearched>(
       _onSearched,
       transformer: droppable(),
     );
+
+    on<MusicPlayPressed>(
+      _onPlayPressed,
+      transformer: droppable(),
+    );
+
+    on<MusicPausePressed>(
+      _onPausePressed,
+      transformer: droppable(),
+    );
   }
 
-  /// TODO handle debounce
   void _onSearched(MusicSearched event, Emitter<MusicState> emit) async {
     final inputEither = inputConverter.stringToTerm(event.str);
 
@@ -43,31 +55,47 @@ class MusicBloc extends Bloc<MusicEvent, MusicState> {
       (failure) async => emit(state),
       (term) async {
         /// loading state
-        emit(MusicLoadInProgress(state.listMusic));
+        emit(MusicLoadInProgress(
+            listMusic: state.listMusic, playedMusic: state.playedMusic));
         final failureOrMusic = await getListMusicUseCase(term);
         await failureOrMusic.fold(
           /// error state
           (failure) async => emit(MusicEmpty(
-            state.listMusic,
-            _mapFailureToMessage(failure),
-            _mapFailureToSubMessage(failure),
+            listMusic: state.listMusic,
+            playedMusic: state.playedMusic,
+            message: _mapFailureToMessage(failure),
+            subMessage: _mapFailureToSubMessage(failure),
           )),
           (listMusic) async {
             if (listMusic.isEmpty) {
               /// empty state
               emit(MusicEmpty(
-                listMusic,
-                emptyMusicMessage(event.str),
-                initialSubMessage,
+                listMusic: listMusic,
+                playedMusic: state.playedMusic,
+                message: emptyMusicMessage(event.str),
+                subMessage: initialSubMessage,
               ));
             } else {
               /// success state
-              emit(MusicLoadSuccess(listMusic));
+              emit(MusicLoadSuccess(
+                listMusic: listMusic,
+                playedMusic: state.playedMusic,
+              ));
             }
           },
         );
       },
     );
+  }
+
+  void _onPlayPressed(MusicPlayPressed event, Emitter<MusicState> emit) async {
+    emit(MusicPlayed(listMusic: state.listMusic, playedMusic: event.music));
+  }
+
+  void _onPausePressed(
+      MusicPausePressed event, Emitter<MusicState> emit) async {
+    emit(MusicPaused(
+        listMusic: state.listMusic, playedMusic: state.playedMusic));
   }
 
   String _mapFailureToMessage(Failure failure) {

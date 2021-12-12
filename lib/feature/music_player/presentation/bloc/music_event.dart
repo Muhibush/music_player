@@ -16,7 +16,14 @@ class MusicSearched extends MusicEvent {
   List<Object?> get props => [str];
 }
 
-class MusicPlayPressed extends MusicEvent {}
+class MusicPlayPressed extends MusicEvent {
+  final Music music;
+
+  const MusicPlayPressed(this.music);
+
+  @override
+  List<Object?> get props => [music];
+}
 
 class MusicPausePressed extends MusicEvent {}
 

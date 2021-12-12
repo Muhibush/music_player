@@ -2,45 +2,55 @@ part of 'music_bloc.dart';
 
 abstract class MusicState extends Equatable {
   final List<Music> listMusic;
+  final Music? playedMusic;
 
-  const MusicState(this.listMusic);
+  const MusicState({required this.listMusic, this.playedMusic});
 
   @override
-  List<Object?> get props => [listMusic];
+  List<Object?> get props => [listMusic, playedMusic];
 
   @override
   String toString() {
-    return runtimeType.toString();
+    return runtimeType.toString() +
+        "\ntrackName: " +
+        (playedMusic?.trackName ?? 'empty') +
+        "\nlistMusicLength: " +
+        (listMusic.length.toString());
   }
 }
 
 class MusicLoadInProgress extends MusicState {
-  const MusicLoadInProgress(List<Music> listMusic) : super(listMusic);
+  const MusicLoadInProgress(
+      {required List<Music> listMusic, Music? playedMusic})
+      : super(listMusic: listMusic, playedMusic: playedMusic);
 }
 
 class MusicLoadSuccess extends MusicState {
-  const MusicLoadSuccess(List<Music> listMusic) : super(listMusic);
+  const MusicLoadSuccess({required List<Music> listMusic, Music? playedMusic})
+      : super(listMusic: listMusic, playedMusic: playedMusic);
 }
 
 class MusicEmpty extends MusicState {
   final String message;
   final String subMessage;
 
-  const MusicEmpty(List<Music> listMusic, this.message, this.subMessage)
-      : super(listMusic);
+  const MusicEmpty(
+      {required List<Music> listMusic,
+      Music? playedMusic,
+      required this.message,
+      required this.subMessage})
+      : super(listMusic: listMusic, playedMusic: playedMusic);
 
   @override
   List<Object?> get props => [listMusic, message, subMessage];
 }
 
 class MusicPlayed extends MusicState {
-  const MusicPlayed(List<Music> listMusic) : super(listMusic);
+  const MusicPlayed({required List<Music> listMusic, Music? playedMusic})
+      : super(listMusic: listMusic, playedMusic: playedMusic);
 }
 
 class MusicPaused extends MusicState {
-  const MusicPaused(List<Music> listMusic) : super(listMusic);
-}
-
-class MusicResumed extends MusicState {
-  const MusicResumed(List<Music> listMusic) : super(listMusic);
+  const MusicPaused({required List<Music> listMusic, Music? playedMusic})
+      : super(listMusic: listMusic, playedMusic: playedMusic);
 }
