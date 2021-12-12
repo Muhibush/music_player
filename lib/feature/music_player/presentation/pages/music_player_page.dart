@@ -68,6 +68,10 @@ class MusicPlayerPage extends StatelessWidget {
                       isPlaying: isPlaying,
                       onTap: () {
                         context.read<MusicBloc>().add(MusicPlayPressed(music));
+                        FocusScopeNode currentFocus = FocusScope.of(context);
+                        if (!currentFocus.hasPrimaryFocus) {
+                          currentFocus.unfocus();
+                        }
                       },
                     );
                   });
