@@ -48,6 +48,10 @@ dependencies:
   google_fonts: ^2.1.0
   # screen size
   flutter_screenutil: ^5.0.1
+  # image cache
+  cached_network_image: ^3.2.0
+  # shimmer
+  shimmer: ^2.0.0
 
 
   # The following adds the Cupertino Icons font to your application.

@@ -15,7 +15,9 @@ class MusicPlayerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
+        elevation: 0,
         title: TextField(
           style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
@@ -45,6 +47,7 @@ class MusicPlayerPage extends StatelessWidget {
                 var music = listMusic[index];
                 return MusicItem(
                   music: music,
+                  isPlaying: false,
                   onTap: () async {
                     var url = music.previewUrl;
                     var isPlaying = audioPlayer.playing;
