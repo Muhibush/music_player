@@ -1,10 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:music_player/core/widgets/atoms/cache_network_image_atom.dart';
 import 'package:music_player/feature/music_player/domain/entities/music.dart';
 import 'package:music_player/feature/music_player/presentation/bloc/music_bloc.dart';
-import 'package:shimmer/shimmer.dart';
 
 class MusicControls extends StatelessWidget {
   final Music music;
@@ -37,21 +36,8 @@ class MusicControls extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(7.r))),
         child: Row(
           children: [
-            CachedNetworkImage(
-              fit: BoxFit.cover,
+            CacheNetworkImageAtom(
               imageUrl: music.artworkUrl100 ?? '',
-              placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey.shade700,
-                  highlightColor: Colors.grey.shade600,
-                  child: Container(color: Colors.white)),
-              errorWidget: (context, url, error) {
-                return Container(
-                    color: Colors.grey.shade700,
-                    child: const Icon(
-                      Icons.broken_image,
-                      color: Colors.grey,
-                    ));
-              },
               width: 37.w,
               height: 37.w,
             ),

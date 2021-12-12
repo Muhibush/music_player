@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class EmptyState extends StatelessWidget {
+class EmptyStateMolecule extends StatelessWidget {
   final String message;
   final String subMessage;
 
-  const EmptyState({Key? key, required this.message, required this.subMessage})
+  const EmptyStateMolecule(
+      {Key? key, required this.message, required this.subMessage})
       : super(key: key);
 
   @override

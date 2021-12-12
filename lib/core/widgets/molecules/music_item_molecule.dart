@@ -1,15 +1,14 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:music_player/core/widgets/atoms/cache_network_image_atom.dart';
 import 'package:music_player/feature/music_player/domain/entities/music.dart';
-import 'package:shimmer/shimmer.dart';
 
-class MusicItem extends StatelessWidget {
+class MusicItemMolecule extends StatelessWidget {
   final Music music;
   final VoidCallback onTap;
   final bool isPlaying;
 
-  const MusicItem(
+  const MusicItemMolecule(
       {Key? key,
       required this.music,
       required this.onTap,
@@ -26,21 +25,8 @@ class MusicItem extends StatelessWidget {
         alignment: Alignment.center,
         child: Row(
           children: [
-            CachedNetworkImage(
-              fit: BoxFit.cover,
+            CacheNetworkImageAtom(
               imageUrl: music.artworkUrl100 ?? '',
-              placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey.shade700,
-                  highlightColor: Colors.grey.shade600,
-                  child: Container(color: Colors.white)),
-              errorWidget: (context, url, error) {
-                return Container(
-                    color: Colors.grey.shade700,
-                    child: const Icon(
-                      Icons.broken_image,
-                      color: Colors.grey,
-                    ));
-              },
               width: 42.w,
               height: 42.w,
             ),

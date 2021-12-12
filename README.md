@@ -24,6 +24,7 @@ samples, guidance on mobile development, and a full API reference.
     - only support android device with .....
     - min sdk
 ○ Supported features.
+    - play music when on background
     - test build release
     - Arrange Act Assert testing
     - bloc logging
